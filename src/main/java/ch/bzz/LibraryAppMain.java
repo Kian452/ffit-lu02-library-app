@@ -9,6 +9,7 @@ public class LibraryAppMain {
     public static void main(String[] args) {
         Map<String, Command> commands = new LinkedHashMap<>();
         commands.put("help", new HelpCommand(commands));
+        commands.put("listBooks", new ListBooksCommand());
         commands.put("quit", new QuitCommand());
 
         Scanner scanner = new Scanner(System.in);
