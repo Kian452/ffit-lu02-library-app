@@ -4,5 +4,5 @@ public interface Command {
 
     String getDescription();
 
-    void execute();
+    void execute(String argument);
 }

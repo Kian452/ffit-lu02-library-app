@@ -16,7 +16,7 @@ public class HelpCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(String argument) {
         System.out.println("Available commands:");
         commands.forEach((name, command) ->
                 System.out.println("  " + name + " - " + command.getDescription()));
