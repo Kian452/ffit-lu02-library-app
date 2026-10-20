@@ -1,29 +1,19 @@
 package ch.bzz;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class BookRepository {
-
-    private Connection connect() throws SQLException {
-        Properties config = Config.load();
-        return DriverManager.getConnection(
-                config.getProperty("DB_URL"),
-                config.getProperty("DB_USER"),
-                config.getProperty("DB_PASSWORD"));
-    }
 
     public List<Book> findAll() {
         String sql = "SELECT id, isbn, title, author, publication_year FROM books ORDER BY id";
         List<Book> books = new ArrayList<>();
 
-        try (Connection connection = connect();
+        try (Connection connection = Database.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -47,7 +37,7 @@ public class BookRepository {
                 + "ON CONFLICT (id) DO UPDATE SET isbn = EXCLUDED.isbn, title = EXCLUDED.title, "
                 + "author = EXCLUDED.author, publication_year = EXCLUDED.publication_year";
 
-        try (Connection connection = connect();
+        try (Connection connection = Database.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             for (Book book : books) {

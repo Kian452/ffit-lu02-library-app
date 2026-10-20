@@ -12,7 +12,7 @@ public class LibraryAppMain {
         Map<String, Command> commands = new LinkedHashMap<>();
         commands.put("help", new HelpCommand(commands));
         commands.put("listBooks", new ListBooksCommand(bookRepository));
-        commands.put("importBooks", new ImportBooksCommand(bookRepository));
+        commands.put("importBooks", new ImportBooksCommand(new BookTsvReader(), bookRepository));
         commands.put("quit", new QuitCommand());
 
         Scanner scanner = new Scanner(System.in);
